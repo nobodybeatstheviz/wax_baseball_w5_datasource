@@ -1,0 +1,4 @@
+tableauhyperapi>=0.0.26359
+tableauserverclient>=0.38
+google-cloud-bigquery>=3.43
+requests>=2.33

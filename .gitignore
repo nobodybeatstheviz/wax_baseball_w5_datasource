@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+
+# generated extracts + packaged data sources (Presentation layer -- rerun build_datasource.py)
+build/
+*.hyper
+*.tdsx
+*.tds
+__pycache__/
+hyperd.log

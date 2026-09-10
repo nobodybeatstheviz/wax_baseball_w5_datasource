@@ -9,3 +9,6 @@ build/
 *.tds
 __pycache__/
 hyperd.log
+
+# local Tableau MCP install (py build_workbook.py --setup-mcp)
+.mcp/

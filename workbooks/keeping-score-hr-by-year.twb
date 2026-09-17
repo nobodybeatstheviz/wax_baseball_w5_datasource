@@ -36,7 +36,22 @@
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
-        <style />
+        <style>
+          <style-rule element='mark'>
+            <format attr='mark-color' value='#DB1D1D' />
+          </style-rule>
+          <style-rule element='worksheet'>
+            <format attr='font-family' value='Cascadia Code' />
+            <format attr='color' value='#1A1A1A' />
+          </style-rule>
+          <style-rule element='axis'>
+            <format attr='font-family' value='Cascadia Code' />
+            <format attr='color' value='#6B6B6B' />
+          </style-rule>
+          <style-rule element='label'>
+            <format attr='font-family' value='Cascadia Code' />
+          </style-rule>
+        </style>
         <panes>
           <pane selection-relaxation-option='selection-relaxation-allow'>
             <view>
@@ -48,7 +63,7 @@
         <rows>[KeepingScore-Plays].[sum:Calculation_HR:qk]</rows>
         <cols>[KeepingScore-Plays].[yr:game_date:ok]</cols>
       </table>
-      <simple-id uuid='{43A6D215-B83F-4A49-90E2-95BACF9A393B}' />
+      <simple-id uuid='{96802CB9-AC13-4505-A4BE-2A29748E0528}' />
     </worksheet>
   </worksheets>
   <windows>

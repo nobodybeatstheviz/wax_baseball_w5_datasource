@@ -97,6 +97,37 @@ def _column_xml(c: dict, indent: str) -> str:
     return head + " />\n"
 
 
+CHART_TOKENS = pathlib.Path(os.environ.get("NBTV_CHART_TOKENS",
+                                           pathlib.Path.home() / ".claude" / "skills" / "nbtv-design" / "tokens" / "chart.json"))
+
+
+def _style_xml() -> str:
+    """NBTV chart tokens as a worksheet <style> block (Build 2.5: brand is a ceiling, never a blocker --
+    if chart.json is missing the sheet ships unstyled). Mark color + fonts; the server validates the grammar."""
+    if not CHART_TOKENS.exists():
+        return "        <style />\n"
+    t = json.loads(CHART_TOKENS.read_text(encoding="utf-8"))
+    bar, ink, muted = t["light"]["bar"], t["light"]["ink"], t["light"]["muted"]
+    font = t["font"]["display"].split(",")[0].strip("'\" ")
+    return f"""        <style>
+          <style-rule element='mark'>
+            <format attr='mark-color' value='{bar}' />
+          </style-rule>
+          <style-rule element='worksheet'>
+            <format attr='font-family' value='{font}' />
+            <format attr='color' value='{ink}' />
+          </style-rule>
+          <style-rule element='axis'>
+            <format attr='font-family' value='{font}' />
+            <format attr='color' value='{muted}' />
+          </style-rule>
+          <style-rule element='label'>
+            <format attr='font-family' value='{font}' />
+          </style-rule>
+        </style>
+"""
+
+
 def _instance(col: str, deriv: str) -> tuple[str, str]:
     prefix, suffix = _DERIV[deriv]
     return f"[{prefix}:{col}:{suffix}]", _ITYPE[suffix]
@@ -148,8 +179,7 @@ def render_twb(spec: dict, env: dict[str, str]) -> str:
 {dep_columns}{instances}          </datasource-dependencies>
           <aggregation value='true' />
         </view>
-        <style />
-        <panes>
+{_style_xml()}        <panes>
           <pane selection-relaxation-option='selection-relaxation-allow'>
             <view>
               <breakdown value='auto' />
